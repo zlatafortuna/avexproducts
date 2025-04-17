@@ -1,0 +1,214 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Продукція гуртом від Авекс</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .accordion-header {
+            transition: background-color 0.3s ease;
+        }
+        .accordion-header:hover {
+            background-color: #1e40af;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .accordion-content.open {
+            max-height: 1000px; /* Adjust based on content */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-blue-900 mb-4">Продукція гуртом (оптом) від виробника</h1>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto">
+                Компанія <span class="font-semibold">«Авекс»</span> пропонує широкий асортимент мастильних матеріалів та охолоджувальних рідин для легкового, комерційного, сільськогосподарського транспорту, малої техніки та промислового обладнання. Наша продукція відповідає стандартам якості ISO 9001:2015.
+            </p>
+        </header>
+
+        <!-- Accordion Sections -->
+        <div class="space-y-4">
+            <!-- Оливи для легкового транспорту -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-4 cursor-pointer bg-blue-800 text-white rounded-t-lg flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Оливи для легкового транспорту</h2>
+                    <span class="text-2xl">▼</span>
+                </div>
+                <div class="accordion-content p-6">
+                    <h3 class="text-lg font-semibold text-blue-900 mb-2">Моторні оливи</h3>
+                    <p class="text-gray-600 mb-4">Моторні оливи (PVL) для легкових автомобілів, мототехніки та садової техніки подовжують термін служби двигуна, зменшують тертя та захищають від зносу.</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Синтетичні, напівсинтетичні та мінеральні оливи.</li>
+                        <li>Сумісність з FIAT, FORD, BMW, VW тощо.</li>
+                        <li>Різні обсяги фасування.</li>
+                        <li>Висока термічна стійкість.</li>
+                    </ul>
+                    <p class="text-gray-600 mb-2"><strong>Критерії вибору:</strong> Сумісність, в’язкість, кліматичні умови.</p>
+                    <p class="text-gray-600"><strong>Продаж:</strong> Замовлення через сайт, телефон, email. Доставка по Україні.</p>
+
+                    <h3 class="text-lg font-semibold text-blue-900 mt-6 mb-2">Трансмісійні оливи</h3>
+                    <p class="text-gray-600 mb-4">Для механічних та автоматичних коробок передач, гідропідсилювачів керма. Зменшують шум і знос.</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Відповідність світовим стандартам.</li>
+                        <li>Захист від корозії.</li>
+                        <li>Доступна ціна.</li>
+                    </ul>
+                    <p class="text-gray-600 mb-2"><strong>Критерії вибору:</strong> Тип трансмісії, в’язкість.</p>
+                    <p class="text-gray-600"><strong>Продаж:</strong> Через сайт або контакти компанії.</p>
+
+                    <h3 class="text-lg font-semibold text-blue-900 mt-6 mb-2">Оливи для малої техніки</h3>
+                    <p class="text-gray-600 mb-4">Для мотоциклів, скутерів, садової техніки. Підвищують ефективність двигунів.</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Зниження димності вихлопу.</li>
+                        <li>Захист від корозії.</li>
+                        <li>Зручне фасування.</li>
+                    </ul>
+                    <p class="text-gray-600"><strong>Продаж:</strong> Оперативна доставка по Україні.</p>
+                </div>
+            </div>
+
+            <!-- Оливи для комерційного та сільськогосподарського транспорту -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-4 cursor-pointer bg-blue-800 text-white rounded-t-lg flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Оливи для комерційного та сільськогосподарського транспорту</h2>
+                    <span class="text-2xl">▼</span>
+                </div>
+                <div class="accordion-content p-6">
+                    <h3 class="text-lg font-semibold text-blue-900 mb-2">Моторні оливи</h3>
+                    <p class="text-gray-600 mb-4">Для дизельних двигунів вантажівок, автобусів, тракторів. Захищають від зносу та корозії.</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Збагачені присадками.</li>
+                        <li>Зниження витрат на обслуговування.</li>
+                        <li>Оптові та роздрібні партії.</li>
+                    </ul>
+                    <p class="text-gray-600"><strong>Продаж:</strong> Замовлення через сайт, доставка по Україні.</p>
+
+                    <h3 class="text-lg font-semibold text-blue-900 mt-6 mb-2">Трансмісійні оливи</h3>
+                    <p class="text-gray-600 mb-4">Забезпечують плавну роботу передач, знижують шум.</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Захист від піноутворення.</li>
+                        <li>Довговічність деталей.</li>
+                    </ul>
+
+                    <h3 class="text-lg font-semibold text-blue-900 mt-6 mb-2">Гідравлічні оливи</h3>
+                    <p class="text-gray-600 mb-4">Для навантажувальної техніки, тракторів. Захищають гідросистеми.</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Термостабільність.</li>
+                        <li>Економічність.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Індустріальні оливи -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-4 cursor-pointer bg-blue-800 text-white rounded-t-lg flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Індустріальні оливи</h2>
+                    <span class="text-2xl">▼</span>
+                </div>
+                <div class="accordion-content p-6">
+                    <p class="text-gray-600 mb-4">Для редукторів, компресорів, вакуумних насосів. Зменшують тертя, подовжують термін служби обладнання.</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Типи: нелеговані, гідравлічні, редукторні, компресорні тощо.</li>
+                        <li>Стабільна в’язкість.</li>
+                        <li>Доступна ціна.</li>
+                    </ul>
+                    <p class="text-gray-600"><strong>Критерії вибору:</strong> Призначення, в’язкість, умови експлуатації.</p>
+                    <p class="text-gray-600"><strong>Продаж:</strong> Через сайт, доставка по Україні.</p>
+                </div>
+            </div>
+
+            <!-- Охолоджувальні рідини -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-4 cursor-pointer bg-blue-800 text-white rounded-t-lg flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Охолоджувальні рідини</h2>
+                    <span class="text-2xl">▼</span>
+                </div>
+                <div class="accordion-content p-6">
+                    <p class="text-gray-600 mb-4">Забезпечують охолодження двигунів, запобігають корозії. Екологічно безпечні.</p>
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li>Спеціальні присадки.</li>
+                        <li>Довговічність двигуна.</li>
+                        <li>Оптові та роздрібні поставки.</li>
+                    </ul>
+                    <p class="text-gray-600"><strong>Продаж:</strong> Через каталог, доставка по Україні.</p>
+                </div>
+            </div>
+
+            <!-- Чому обирають Авекс -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="accordion-header p-4 cursor-pointer bg-blue-800 text-white rounded-t-lg flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Чому обирають «Авекс»?</h2>
+                    <span class="text-2xl">▼</span>
+                </div>
+                <div class="accordion-content p-6">
+                    <ul class="list-disc pl-6 mb-4 text-gray-600">
+                        <li><strong>Якість:</strong> Сертифікація ISO 9001:2015.</li>
+                        <li><strong>Асортимент:</strong> Оливи та рідини для транспорту та обладнання.</li>
+                        <li><strong>Гнучкість:</strong> Різні обсяги фасування.</li>
+                        <li><strong>Підтримка:</strong> Професійні консультації.</li>
+                        <li><strong>Доставка:</strong> Оперативна по Києву та Україні.</li>
+                    </ul>
+                    <p class="text-gray-600">Співпраця з СТО, підприємствами, магазинами.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="text-center mt-12">
+            <a href="#contact" class="inline-block bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-900 transition">Замовити продукцію</a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const isOpen = content.classList.contains('open');
+                document.querySelectorAll('.accordion-content').forEach(c => {
+                    c.classList.remove('open');
+                    c.previousElementSibling.querySelector('span').textContent = '▼';
+                });
+                if (!isOpen) {
+                    content.classList.add('open');
+                    header.querySelector('span').textContent = '▲';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
